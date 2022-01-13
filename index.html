@@ -8,82 +8,16 @@
     <link rel="shortcut icon" href="/src/media/ico.svg" type="image/x-icon" />
     <link href="/src/style/style.css" rel="stylesheet" />
     <script src="/src/script/back.js"></script>
-    <script src="/src/script/element.js"></script>
     <script src="/src/script/main.js"></script>
+    <script src="/src/script/element.js"></script>
     <script defer src="/src/script/script.js"></script>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-      html {
-        font-family: "Roboto", sans-serif;
-      }
-      article {
-        display: flex;
-        align-items: center;
-        font-size: 2rem;
-      }
-      @keyframes blink {
-        0% {
-          opacity: 0;
-        }
-        50% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0;
-        }
-      }
-      i {
-        height: 2rem;
-        width: 2px;
-        display: inline-block;
-        background-color: red;
-        animation-name: blink;
-        animation-duration: 800ms;
-        animation-iteration-count: infinite;
-      }
-    </style>
     <!-------------->
   </head>
   <body>
     <!-------------->
-    <section id="typeWriter">
-      <article>
-        <p>Hi, I am <span></span></p>
-        <i></i>
-      </article>
-    </section>
+    
+    
+    
     <!-------------->
-    <script>
-      const nTypeWriter = (element, txt = [], writeSpeed = 75, clearSpeed = 50, writeDelay = 500, clearDelay = 1000) => {
-        let txtIndex = 0;
-        let i = 0;
-        const clear = () => {
-          if (element.textContent.length) {
-            element.textContent = element.textContent.slice(0, -1);
-            i++;
-            setTimeout(clear, clearSpeed);
-          } else {
-            setTimeout(write, writeDelay);
-            i = 0;
-          }
-        };
-        const write = () => {
-          if (i < txt[txtIndex].length) {
-            element.textContent += txt[txtIndex].charAt(i);
-            i++;
-            setTimeout(write, writeSpeed);
-          } else {
-            setTimeout(clear, clearDelay);
-            txtIndex++;
-            i = 0;
-            if (txtIndex >= txt.length) {
-              txtIndex = 0;
-            }
-          }
-        };
-        write();
-      };
-      nTypeWriter(document.querySelector("#typeWriter article span"), ["Nazmus Sayad", "a Designer", "a Developer"], 70, 50, 300, 2000);
-    </script>
   </body>
 </html>
