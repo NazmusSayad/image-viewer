@@ -1,1 +1,205 @@
-const nArRan=(e=[!1,!0])=>e[Math.ceil(Math.random()*e.length)-1],nObArSort=(e,t,n)=>n?e.sort(((e,n)=>n[t]>e[t]?1:e[t]>n[t]?-1:0)):e.sort(((e,n)=>e[t]>n[t]?1:n[t]>e[t]?-1:0)),nCalculateAge=e=>{let t,n,o=new Date,r=o.getYear(),i=o.getMonth(),s=o.getDate(),l=new Date(e.substring(6,10),e.substring(0,2)-1,e.substring(3,5)),a=l.getYear(),g=l.getMonth(),c=l.getDate(),m=r-a;return i>=g?t=i-g:(m--,t=12+i-g),s>=c?n=s-c:(t--,n=31+s-c,t<0&&(t=11,m--)),{B:new Date(e),D:n,M:t,Y:m}},nSelect=e=>{if(document.body.createTextRange){const t=document.body.createTextRange();t.moveToElementText(e),t.select()}else if(window.getSelection){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}return e.textContent.trim()},nElementVisible=e=>{const t=e.getBoundingClientRect();return t.top>=0&&t.bottom<=window.innerHeight||t.top<window.innerHeight&&t.bottom>=0&&'true'},nElementsSort=e=>{let t,n,o,r;for(n=!0;n;){for(n=!1,o=document.querySelectorAll(e),t=0;t<o.length-1;t++)if(r=!1,o[t].textContent.toLowerCase().trim()>o[t+1].textContent.toLowerCase().trim()){r=!0;break}r&&(o[t].parentNode.insertBefore(o[t+1],o[t]),n=!0)}},nJSON=(e,t)=>{fetch(e).then((e=>e.json())).then((e=>{t(e)}))},nMathRandom=(e=0,t=1)=>(e=Math.ceil(e),Math.floor(Math.random()*(Math.floor(t)-e+1)+e)),nHTML=(e='div',t='',n='',o='')=>{const r=document.createElement(e.trim());return''!==n&&r.setAttribute('class',n.trim()),''!==o&&r.setAttribute('id',o.trim()),r.innerHTML=t.trim(),r},nTime=(e=':',t='-')=>{const n=new Date,o=n.getFullYear(),r=n.getMonth()+1,i=n.getDate(),s=n.getMinutes(),l=''+n.getSeconds();let a;const g=e=>(e+='').length<2?e='0'+e:e;return{time:g((()=>{let e=n.getHours();return e?e>12?(e-=12,a='PM'):a='AM':(e=12,a='AM'),e})())+e+g(s)+e+g(l)+' '+a,date:g(i)+t+g(r)+t+o}},nTypeWriter=(e,t=[],n=75,o=50,r=500,i=1e3,s=!1,l=!0,a=(()=>{}))=>{let g=0,c=0,m=1;const u=()=>{e.textContent.length?(e.textContent=e.textContent.slice(0,-1),c++,setTimeout(u,o)):(c=0,setTimeout(d,r))},d=()=>{if(c<t[g].length)e.append(t[g].charAt(c)),c++,setTimeout(d,n);else{if(m++,s&&s<m)return void a(e,{wS:n,cS:o,wD:r,cD:i});c=0,g<t.length-1?g++:g=0,setTimeout(u,i)}};e.textContent.length&&l?u():d()},nSetCookie=(e,t,n)=>{const o=new Date;t?n>0?o.setTime(o.getTime()+24*n*60*60*1e3):o.setTime(o.getTime()+31536e6):o.setTime(o.getTime()),document.cookie=e+'='+t+';expires='+o.toUTCString()+';path=/'},nGetCookie=e=>{let t=e+'=',n=decodeURIComponent(document.cookie).split(';');for(let e=0;e<n.length;e++){let o=n[e];for(;' '==o.charAt(0);)o=o.substring(1);if(0==o.indexOf(t))return o.substring(t.length,o.length)}return''};
+// Array
+const nArRan = (array = [false, true]) => {
+  return array[Math.ceil(Math.random() * array.length) - 1]
+}
+// Object, Key, Descending or Ascending
+const nObArSort = (object, key, sort) => {
+  if (!sort) return object.sort((a, b) => (a[key] > b[key] ? 1 : b[key] > a[key] ? -1 : 0))
+  return object.sort((b, a) => (a[key] > b[key] ? 1 : b[key] > a[key] ? -1 : 0))
+}
+// MM/DD/YYYY
+const nCalculateAge = (mdyy) => {
+  let now = new Date()
+  let yearNow = now.getYear()
+  let monthNow = now.getMonth()
+  let dateNow = now.getDate()
+  let dob = new Date(mdyy.substring(6, 10), mdyy.substring(0, 2) - 1, mdyy.substring(3, 5))
+  let yearDob = dob.getYear()
+  let monthDob = dob.getMonth()
+  let dateDob = dob.getDate()
+  let yearAge = yearNow - yearDob
+  let monthAge
+  let dateAge
+  if (monthNow >= monthDob) {
+    monthAge = monthNow - monthDob
+  } else {
+    yearAge--
+    monthAge = 12 + monthNow - monthDob
+  }
+  if (dateNow >= dateDob) {
+    dateAge = dateNow - dateDob
+  } else {
+    monthAge--
+    dateAge = 31 + dateNow - dateDob
+    if (monthAge < 0) {
+      monthAge = 11
+      yearAge--
+    }
+  }
+  return { B: new Date(mdyy), D: dateAge, M: monthAge, Y: yearAge }
+}
+// Element
+const nSelect = (element) => {
+  if (document.body.createTextRange) {
+    const range = document.body.createTextRange()
+    range.moveToElementText(element)
+    range.select()
+  } else if (window.getSelection) {
+    const selection = window.getSelection()
+    const range = document.createRange()
+    range.selectNodeContents(element)
+    selection.removeAllRanges()
+    selection.addRange(range)
+  }
+  return element.textContent.trim()
+}
+// Element
+const nElementVisible = (element) => {
+  const position = element.getBoundingClientRect()
+  if (position.top >= 0 && position.bottom <= window.innerHeight) return true
+  else if (position.top < window.innerHeight && position.bottom >= 0) return "true"
+  else return false
+}
+// Selectors
+const nElementsSort = (selectors) => {
+  let i, switching, b, shouldSwitch
+  switching = true
+  while (switching) {
+    switching = false
+    b = document.querySelectorAll(selectors)
+    for (i = 0; i < b.length - 1; i++) {
+      shouldSwitch = false
+      if (b[i].textContent.toLowerCase().trim() > b[i + 1].textContent.toLowerCase().trim()) {
+        shouldSwitch = true
+        break
+      }
+    }
+    if (shouldSwitch) {
+      b[i].parentNode.insertBefore(b[i + 1], b[i])
+      switching = true
+    }
+  }
+}
+// Src, After Load()
+const nJSON = (src, func) => {
+  fetch(src)
+    .then((res) => res.json())
+    .then((data) => {
+      func(data)
+    })
+}
+// Minimum, Maximum
+const nMathRandom = (min = 0, max = 1) => {
+  min = Math.ceil(min)
+  return Math.floor(Math.random() * (Math.floor(max) - min + 1) + min)
+}
+// Parent, InnerHTML, Class, Id
+const nHTML = (parent = "div", innerH = "", classs = "", iddd = "") => {
+  const parentE = document.createElement(parent.trim())
+  if (classs !== "") parentE.setAttribute("class", classs.trim())
+  if (iddd !== "") parentE.setAttribute("id", iddd.trim())
+  parentE.innerHTML = innerH.trim()
+  return parentE
+}
+// Time Separator, Date separator
+const nTime = (ts = ":", ds = "-") => {
+  const moonLanding = new Date()
+  const year = moonLanding.getFullYear()
+  const month = moonLanding.getMonth() + 1
+  const date = moonLanding.getDate()
+  const minutes = moonLanding.getMinutes()
+  const seconds = "" + moonLanding.getSeconds()
+  let amOrPm
+  const checkLength = (main) => {
+    main += ""
+    if (main.length < 2) {
+      main = "0" + main
+      return main
+    } else {
+      return main
+    }
+  }
+  const hours = () => {
+    let a = moonLanding.getHours()
+    if (!a) {
+      a = 12
+      amOrPm = "AM"
+    } else if (a > 12) {
+      a -= 12
+      amOrPm = "PM"
+    } else {
+      amOrPm = "AM"
+    }
+    return a
+  }
+  return {
+    time: checkLength(hours()) + ts + checkLength(minutes) + ts + checkLength(seconds) + " " + amOrPm,
+    date: checkLength(date) + ds + checkLength(month) + ds + year,
+  }
+}
+// Element, Text, Write Speed, Clear Speed, Write Delay, Clear Delay, Count, Clean Before Start, After Limit()
+const nTypeWriter = (element, txt = [], wS = 75, cS = 50, wD = 500, cD = 1000, count = false, clean = true, fn = () => {}) => {
+  let txtIndex = 0
+  let i = 0
+  let counter = 1
+  const clear = () => {
+    if (element.textContent.length) {
+      element.textContent = element.textContent.slice(0, -1)
+      i++
+      setTimeout(clear, cS)
+    } else {
+      i = 0
+      setTimeout(write, wD)
+    }
+  }
+  const write = () => {
+    if (i < txt[txtIndex].length) {
+      element.append(txt[txtIndex].charAt(i))
+      i++
+      setTimeout(write, wS)
+    } else {
+      counter++
+      if (count && count < counter) {
+        fn(element, { wS, cS, wD, cD })
+        return
+      }
+      i = 0
+      if (txtIndex < txt.length - 1) {
+        txtIndex++
+      } else {
+        txtIndex = 0
+      }
+      setTimeout(clear, cD)
+    }
+  }
+  if (element.textContent.length && clean) clear()
+  else write()
+}
+// Key, Value, Day, Hour, Minute, Second
+const nCookie = function (key, value, day = 0, hour = 0, minute = 0, second = 0) {
+  switch (arguments.length) {
+    case 1:
+      {
+        let name = key + "="
+        let ca = document.cookie.split(";")
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i]
+          while (c.charAt(0) == " ") {
+            c = c.substring(1)
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length)
+          }
+        }
+        return ""
+      }
+      break
+    default:
+      {
+        const d = new Date()
+        d.setTime(d.getTime() + (day * 86400000 + hour * 3600000 + minute * 60000 + second * 1000))
+        document.cookie = key + "=" + value + ";" + "expires=" + d.toUTCString() + ";path=/"
+      }
+      break
+  }
+}
