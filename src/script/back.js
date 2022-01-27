@@ -103,38 +103,40 @@ const nHTML = (parent = "div", innerH = "", classs = "", iddd = "") => {
 }
 // Time Separator, Date separator
 const nTime = (ts = ":", ds = "-") => {
-  const moonLanding = new Date()
-  const year = moonLanding.getFullYear()
-  const month = moonLanding.getMonth() + 1
-  const date = moonLanding.getDate()
-  const minutes = moonLanding.getMinutes()
-  const seconds = "" + moonLanding.getSeconds()
-  let amOrPm
-  const checkLength = (main) => {
-    main += ""
+  const moonMain = new Date()
+  const date = [moonMain.getDate(), moonMain.getMonth(), moonMain.getFullYear(), moonMain.getDay()]
+  const time = [moonMain.getHours(), moonMain.getMinutes(), moonMain.getSeconds()]
+  const final = (main) => {
+    main = String(main)
     if (main.length < 2) {
-      main = "0" + main
-      return main
+      return "0" + main
     } else {
       return main
     }
   }
-  const hours = () => {
-    let a = moonLanding.getHours()
-    if (!a) {
-      a = 12
-      amOrPm = "AM"
-    } else if (a > 12) {
-      a -= 12
-      amOrPm = "PM"
-    } else {
-      amOrPm = "AM"
-    }
-    return a
+  const hour2 = ((input) => {
+    if (!input) return [12, "AM"]
+    else if (input < 12) return [input, "AM"]
+    else if (input === 12) return [input, "PM"]
+    else return [(input -= 12), 1]
+  })(time[0])
+  const normal = {
+    date: [
+      final(date[0]),
+      ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date[1]],
+      final(date[2]),
+    ],
+    day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][date[3]],
+    time: [final(hour2[0]), final(time[1]), final(time[2]), hour2[1]],
   }
   return {
-    time: checkLength(hours()) + ts + checkLength(minutes) + ts + checkLength(seconds) + " " + amOrPm,
-    date: checkLength(date) + ds + checkLength(month) + ds + year,
+    raw: { date, time },
+    normal,
+    min: {
+      date: normal.date[0] + ds + final(date[1] + 1) + ds + normal.date[2],
+      time: normal.time[0] + ts + normal.time[1] + ts + normal.time[2] + " " + normal.time[3],
+      day: normal.day,
+    },
   }
 }
 // Element, Text, Write Speed, Clear Speed, Write Delay, Clear Delay, Count, Clean Before Start, After Limit()
