@@ -139,6 +139,30 @@ const nTime = (ts = ":", ds = "-") => {
     },
   }
 }
+// Time Separator, Date separator
+const nTimeMin = (ts = ":", ds = "-") => {
+  const moonMain = new Date()
+  const min = (main) => {
+    main = String(main)
+    if (main.length < 2) {
+      return "0" + main
+    } else {
+      return main
+    }
+  }
+  const hour = ((input) => {
+    if (!input) return [12, "AM"]
+    else if (input < 12) return [input, "AM"]
+    else if (input === 12) return [input, "PM"]
+    else return [(input -= 12), 1]
+  })(moonMain.getHours())
+
+  return {
+    date: min(moonMain.getDate()) + ds + min(moonMain.getMonth()) + ds + moonMain.getFullYear(),
+    time: min(hour[0]) + ts + min(moonMain.getMinutes()) + ts + min(moonMain.getSeconds()) + " " + hour[1],
+    day: moonMain.getDay(),
+  }
+}
 // Element, Text, Write Speed, Clear Speed, Write Delay, Clear Delay, Count, Clean Before Start, After Limit()
 const nTypeWriter = (element, txt = [], wS = 75, cS = 50, wD = 500, cD = 1000, count = false, clean = true, fn = () => {}) => {
   let txtIndex = 0
