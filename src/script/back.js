@@ -118,7 +118,7 @@ const nTime = (ts = ":", ds = "-") => {
     if (!input) return [12, "AM"]
     else if (input < 12) return [input, "AM"]
     else if (input === 12) return [input, "PM"]
-    else return [(input -= 12), 1]
+    else return [(input -= 12), "PM"]
   })(time[0])
   const normal = {
     date: [
@@ -154,7 +154,7 @@ const nTimeMin = (ts = ":", ds = "-") => {
     if (!input) return [12, "AM"]
     else if (input < 12) return [input, "AM"]
     else if (input === 12) return [input, "PM"]
-    else return [(input -= 12), 1]
+    else return [(input -= 12), "PM"]
   })(moonMain.getHours())
 
   return {
