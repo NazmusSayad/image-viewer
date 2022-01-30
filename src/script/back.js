@@ -101,66 +101,26 @@ const nHTML = (parent = "div", innerH = "", classs = "", iddd = "") => {
   parentE.innerHTML = innerH.trim()
   return parentE
 }
-// Time Separator, Date separator
-const nTime = (ts = ":", ds = "-") => {
-  const moonMain = new Date()
-  const date = [moonMain.getDate(), moonMain.getMonth(), moonMain.getFullYear(), moonMain.getDay()]
-  const time = [moonMain.getHours(), moonMain.getMinutes(), moonMain.getSeconds()]
-  const final = (main) => {
-    main = String(main)
-    if (main.length < 2) {
-      return "0" + main
-    } else {
-      return main
-    }
+// IF Seconds, new Date()
+const nTime = (ifSec = true, current = new Date()) => {
+  const config = {
+    hour: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    year: "numeric",
+    month: "2-digit",
+    weekday: "long",
   }
-  const hour2 = ((input) => {
-    if (!input) return [12, "AM"]
-    else if (input < 12) return [input, "AM"]
-    else if (input === 12) return [input, "PM"]
-    else return [(input -= 12), "PM"]
-  })(time[0])
-  const normal = {
-    date: [
-      final(date[0]),
-      ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date[1]],
-      final(date[2]),
-    ],
-    day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][date[3]],
-    time: [final(hour2[0]), final(time[1]), final(time[2]), hour2[1]],
-  }
+  if (ifSec) config.second = "2-digit"
+  const timeDate = current.toLocaleString("en-US", config).split(",")
   return {
-    raw: { date, time },
-    normal,
-    min: {
-      date: normal.date[0] + ds + final(date[1] + 1) + ds + normal.date[2],
-      time: normal.time[0] + ts + normal.time[1] + ts + normal.time[2] + " " + normal.time[3],
-      day: normal.day,
-    },
-  }
-}
-// Time Separator, Date separator
-const nTimeMin = (ts = ":", ds = "-") => {
-  const moonMain = new Date()
-  const min = (main) => {
-    main = String(main)
-    if (main.length < 2) {
-      return "0" + main
-    } else {
-      return main
-    }
-  }
-  const hour = ((input) => {
-    if (!input) return [12, "AM"]
-    else if (input < 12) return [input, "AM"]
-    else if (input === 12) return [input, "PM"]
-    else return [(input -= 12), "PM"]
-  })(moonMain.getHours())
-
-  return {
-    date: min(moonMain.getDate()) + ds + min(moonMain.getMonth()) + ds + moonMain.getFullYear(),
-    time: min(hour[0]) + ts + min(moonMain.getMinutes()) + ts + min(moonMain.getSeconds()) + " " + hour[1],
-    day: moonMain.getDay(),
+    date: current.toLocaleDateString("en-US", {
+      dateStyle: "medium",
+    }),
+    date2: timeDate[1].trim(),
+    time: timeDate[2].trim(),
+    day: timeDate[0],
   }
 }
 // Element, Text, Write Speed, Clear Speed, Write Delay, Clear Delay, Count, Clean Before Start, After Limit()
