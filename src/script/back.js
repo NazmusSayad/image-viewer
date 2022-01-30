@@ -36,7 +36,7 @@ const nCalculateAge = (mdyy) => {
       yearAge--
     }
   }
-  return { B: new Date(mdyy), D: dateAge, M: monthAge, Y: yearAge }
+  return { B: dob, D: dateAge, M: monthAge, Y: yearAge }
 }
 // Element
 const nSelect = (element) => {
