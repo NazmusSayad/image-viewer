@@ -102,7 +102,7 @@ const nHTML = (parent = "div", innerH = "", classs = "", iddd = "") => {
   return parentE
 }
 // IF Seconds, new Date()
-const nTime = (ifSec = true, current = new Date()) => {
+const nTimeDate = (ifSec = true, current = new Date()) => {
   const config = {
     hour: "2-digit",
     day: "2-digit",
