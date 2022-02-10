@@ -1,3 +1,29 @@
+@import "base"; // Variables, Mixins, Extends and Functions
+@mixin phone {
+  @media only screen and (max-width: 37.5em) {
+    // 600px
+    @content;
+  }
+}
+@mixin tablet {
+  @media only screen and (max-width: 48em) {
+    // 768px
+    @content;
+  }
+}
+@mixin tablet-l {
+  @media only screen and (max-width: 62em) {
+    // 992px
+    @content;
+  }
+}
+@mixin laptop-s {
+  @media only screen and (max-width: 75em) {
+    // 1200px
+    @content;
+  }
+}
+// Default Styles
 * {
   margin: 0;
   padding: 0;
@@ -6,19 +32,22 @@
 
 html {
   scroll-behavior: smooth;
+  user-select: none;
+  font-size: 62.5%;
 }
 
 body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: sans-serif;
+  font-size: 1.6rem;
 }
 
-.wrap {
-  width: 100%;
-  max-width: 1440px;
-  margin-inline: auto;
+textarea,
+input {
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
 }
 
-// Imports ---
-@import "utility";
-@import "main";
-@import "mediaQuery";
+// Import other Stylesheets
+@import "utility"; // Utility Stylesheet
+@import "app"; // App Stylesheet
