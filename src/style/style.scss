@@ -1,26 +1,22 @@
 @import "base"; // Variables, Mixins, Extends and Functions
 @mixin phone {
   @media only screen and (max-width: 37.5em) {
-    // 600px
-    @content;
+    @content; // 600px
   }
 }
 @mixin tablet {
   @media only screen and (max-width: 48em) {
-    // 768px
-    @content;
+    @content; // 768px
   }
 }
 @mixin tablet-l {
   @media only screen and (max-width: 62em) {
-    // 992px
-    @content;
+    @content; // 992px
   }
 }
 @mixin laptop-s {
   @media only screen and (max-width: 75em) {
-    // 1200px
-    @content;
+    @content; // 1200px
   }
 }
 // Default Styles
@@ -33,21 +29,20 @@
 html {
   scroll-behavior: smooth;
   user-select: none;
-  font-size: 62.5%;
+  // font-size: 62.5%;
 }
 
 body {
   font-family: sans-serif;
-  font-size: 1.6rem;
+  // font-size: 1.6rem;
 }
 
 textarea,
 input {
-  font-size: inherit;
-  font-family: inherit;
+  font: inherit;
   color: inherit;
 }
 
 // Import other Stylesheets
-@import "utility"; // Utility Stylesheet
-@import "app"; // App Stylesheet
+@import "utility";
+@import "app";
