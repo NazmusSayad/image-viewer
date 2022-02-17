@@ -1,4 +1,4 @@
-@import "base"; // Variables, Mixins, Extends and Functions
+@import "base";
 @mixin phone {
   @media only screen and (max-width: 37.5em) {
     @content; // 600px
@@ -41,6 +41,13 @@ textarea,
 input {
   font: inherit;
   color: inherit;
+}
+
+.-wrapper---- {
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 // Import other Stylesheets
