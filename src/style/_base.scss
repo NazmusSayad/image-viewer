@@ -1,1 +1,20 @@
-// Variables, Mixins, Extends and Functions
+@mixin phone {
+  @media only screen and (max-width: 37.5em) {
+    @content; // 600px
+  }
+}
+@mixin tablet {
+  @media only screen and (max-width: 48em) {
+    @content; // 768px
+  }
+}
+@mixin tablet-l {
+  @media only screen and (max-width: 62em) {
+    @content; // 992px
+  }
+}
+@mixin laptop-s {
+  @media only screen and (max-width: 75em) {
+    @content; // 1200px
+  }
+} // Variables, Mixins, Extends and Functions
