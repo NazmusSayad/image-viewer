@@ -23,7 +23,7 @@ input {
   color: inherit;
 }
 
-.-wrapper---- {
+[-wrap---] {
   width: 100%;
   max-width: 1440px;
   margin-left: auto;
@@ -31,5 +31,4 @@ input {
 }
 
 // Import other Stylesheets
-@import "utility";
 @import "app";
