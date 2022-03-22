@@ -1,34 +1,25 @@
-@import "base";
-// Default Styles
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@import "variables";
+@import "zzzzz";
+@mixin phone {
+  @media only screen and (max-width: 37.5em) {
+    @content; // 600px
+  }
 }
-
-html {
-  scroll-behavior: smooth;
-  user-select: none;
-  // font-size: 62.5%;
+@mixin tablet {
+  @media only screen and (max-width: 48em) {
+    @content; // 768px
+  }
 }
-
-body {
-  font-family: sans-serif;
-  // font-size: 1.6rem;
+@mixin tablet-l {
+  @media only screen and (max-width: 62em) {
+    @content; // 992px
+  }
 }
-
-textarea,
-input {
-  font: inherit;
-  color: inherit;
+@mixin laptop-s {
+  @media only screen and (max-width: 75em) {
+    @content; // 1200px
+  }
 }
-
-[-wrap---] {
-  width: 100%;
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-// Import other Stylesheets
+@import "main";
 @import "app";
+// -----------------------------------------
