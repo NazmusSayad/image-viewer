@@ -6,7 +6,7 @@
 
 html {
   scroll-behavior: smooth;
-  user-select: none;
+  // user-select: none;
   font-size: 62.5%;
 }
 
@@ -21,7 +21,7 @@ input {
   color: inherit;
 }
 
-[-wrap---] {
+[-wrap] {
   width: 100%;
   max-width: 1440px;
   margin-left: auto;

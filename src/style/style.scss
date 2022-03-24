@@ -1,5 +1,4 @@
-@import "variables";
-@import "zzzzz";
+@import "base";
 @mixin phone {
   @media only screen and (max-width: 37.5em) {
     @content; // 600px
