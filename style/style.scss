@@ -1,5 +1,5 @@
 @import "base";
-@mixin phone {
+@mixin mobile {
   @media only screen and (max-width: 37.5em) {
     @content; // 600px
   }
@@ -19,6 +19,6 @@
     @content; // 1200px
   }
 }
+@import "import";
 @import "main";
 @import "app";
-// -----------------------------------------
