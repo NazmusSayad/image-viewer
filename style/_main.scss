@@ -16,12 +16,13 @@ body {
 }
 
 textarea,
-input {
+input,
+button {
   font: inherit;
   color: inherit;
 }
 
-.---wrap--- {
+.---wrapper--- {
   width: 100%;
   max-width: 1440px;
   margin-left: auto;
