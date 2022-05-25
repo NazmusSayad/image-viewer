@@ -14,9 +14,9 @@
   }
 }
 
-@import "base";
+@import "abstracts";
 
-// ------------------------
+// =============================
 * {
   margin: 0;
   padding: 0;
@@ -47,7 +47,8 @@ button {
   margin-left: auto;
   margin-right: auto;
 }
+// =============================
 
 @import "app";
 
-// ------------------------
+@import "components/header";
