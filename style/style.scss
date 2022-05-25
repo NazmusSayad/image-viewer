@@ -1,14 +1,14 @@
-@mixin media($start, $end: null) {
-  @if ($end) {
-    @media only screen and (min-width: $start) and (max-width: $end) {
+@mixin media($_, $__: null) {
+  @if ($__) {
+    @media only screen and (min-width: $_) and (max-width: $__) {
       @content;
     }
-  } @else if($start > 0) {
-    @media only screen and (max-width: $start) {
+  } @else if($_ > 0) {
+    @media only screen and (max-width: $_) {
       @content;
     }
   } @else {
-    @media only screen and (min-width: -$start) {
+    @media only screen and (min-width: -$_) {
       @content;
     }
   }
@@ -47,8 +47,7 @@ button {
   margin-left: auto;
   margin-right: auto;
 }
+@import "app";
 // =============================
 
-@import "app";
-
-@import "components/header";
+@import "partials/header";
