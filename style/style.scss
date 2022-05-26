@@ -17,16 +17,18 @@
 @import "abstracts";
 
 // =============================
-* {
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
-  // user-select: none;
   font-size: 62.5%;
+  // user-select: none;
 }
 
 body {
@@ -34,11 +36,25 @@ body {
   font-size: 1.6rem;
 }
 
-textarea,
 input,
-button {
+button,
+textarea,
+select {
   font: inherit;
-  color: inherit;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 .-- {
