@@ -71,7 +71,12 @@
         output.style.width = output_width + "%"
       }
       const zoomDown = (increment = 1) => {
-        if (output_width === 0) return
+        if (output_width < 1) {
+          output_width = 1
+          output.style.width = "1%"
+
+          return
+        }
 
         output_width -= increment
         output.style.width = output_width + "%"
@@ -97,52 +102,53 @@
       document.onkeydown = () => {
         if (event.keyCode === 13) file.click()
 
-        if (!event.ctrlKey) return
+        if (event.ctrlKey) {
+          switch (event.key) {
+            case "=":
+              event.preventDefault()
+              zoomUp()
+              break
 
-        if (event.key === "=") {
-          event.preventDefault()
-          zoomUp()
-        }
+            case "-":
+              event.preventDefault()
+              zoomDown()
+              break
 
-        if (event.key === "-") {
-          event.preventDefault()
-          zoomDown()
-        }
+            case "0":
+              event.preventDefault()
+              zoomReset()
+              break
 
-        if (event.key === "0") {
-          event.preventDefault()
-          zoomReset()
+            case "+":
+              event.preventDefault()
+              zoomUp(10)
+              break
+
+            case "_":
+              event.preventDefault()
+              zoomDown(10)
+              break
+
+            case ")":
+              event.preventDefault()
+              zoomReset()
+              break
+          }
         }
       }
 
       window.addEventListener(
         "wheel",
         () => {
+          if (!event.ctrlKey) return
+
           event.preventDefault()
           event.stopPropagation()
 
-          if (event.ctrlKey) {
-            if (event.deltaY > 0) {
-              zoomDown(10)
-            } else {
-              zoomUp(10)
-            }
-          } else if (event.shiftKey) {
-            if (event.deltaY > 0) {
-              zoomDown(5)
-            } else {
-              zoomUp(5)
-            }
+          if (event.deltaY > 0) {
+            zoomDown(5)
           } else {
-            document.documentElement.scrollLeft += event.deltaX
-            document.documentElement.scrollTop += event.deltaY
-
-            return
-            if (event.deltaY > 0) {
-              zoomDown()
-            } else {
-              zoomUp()
-            }
+            zoomUp(5)
           }
         },
         {
