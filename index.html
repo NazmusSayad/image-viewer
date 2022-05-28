@@ -6,41 +6,163 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#111111" />
+    <meta name="theme-color" content="#00000000" />
 
     <!-- Webpage Details -->
-    <title>Website</title>
-    <meta name="title" content="Website" />
-    <meta name="description" content="This is a webpage." />
-    <meta name="keywords" content="keyword1,keyword2" />
-    <meta name="author" content="Nazmus Sayad" />
+    <title>Image Viewer</title>
 
     <!-- Search-engine -->
     <meta name="robots" content="index, follow" />
     <meta name="revisit-after" content="1 days" />
 
-    <!-- Styles & Favicon -->
-    <link rel="shortcut icon" href="media/icon/icon.svg" type="image/x-icon" />
-    <link href="style/style.css" rel="stylesheet" />
+    <!-- Styles -->
+    <style>
+      *,
+      *::after,
+      *::before {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        user-select: none;
+      }
 
-    <!-- Scripts -->
-    <script src="script/script.js"></script>
-    <script src="script/main.js"></script>
-    <script defer src="script/element.js"></script>
-    <script defer src="script/app.js"></script>
+      body {
+        background: #232323;
+        overflow: hidden;
+      }
 
-    <script src="script/partials/header.js"></script>
+      .output {
+        position: relative;
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+        width: 100%;
+        margin: auto;
+      }
+
+      .output::after {
+        cursor: move;
+        content: "";
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
-    <!---------->
-    
-    
-    
-    
-    
-    
-    
-    
-    <!---------->
+    <main>
+      <section hidden class="form">
+        <input type="file" accept="image/*" name="image" id="file" />
+        <label for="file">Click To add New</label>
+      </section>
+      <section class="output">
+        <img />
+      </section>
+    </main>
+
+    <script>
+      const zoomUp = (increment = 1) => {
+        output_width += increment
+        output.style.width = output_width + "%"
+      }
+      const zoomDown = (increment = 1) => {
+        if (output_width === 0) return
+
+        output_width -= increment
+        output.style.width = output_width + "%"
+      }
+      const zoomReset = () => {
+        output_width = 100
+        output.style.width = "100%"
+      }
+
+      const file = document.querySelector("input")
+      const output = document.querySelector(".output")
+      const image = document.querySelector("img")
+
+      let output_width = 100
+
+      // ----------------------------
+      file.onchange = () => {
+        if (!event.target.files[0]) return
+
+        image.src = URL.createObjectURL(event.target.files[0])
+      }
+
+      document.onkeydown = () => {
+        if (event.keyCode === 13) file.click()
+
+        if (!event.ctrlKey) return
+
+        if (event.key === "=") {
+          event.preventDefault()
+          zoomUp()
+        }
+
+        if (event.key === "-") {
+          event.preventDefault()
+          zoomDown()
+        }
+
+        if (event.key === "0") {
+          event.preventDefault()
+          zoomReset()
+        }
+      }
+
+      window.addEventListener(
+        "wheel",
+        () => {
+          event.preventDefault()
+          event.stopPropagation()
+
+          if (event.ctrlKey) {
+            if (event.deltaY > 0) {
+              zoomDown(10)
+            } else {
+              zoomUp(10)
+            }
+          } else if (event.shiftKey) {
+            if (event.deltaY > 0) {
+              zoomDown(5)
+            } else {
+              zoomUp(5)
+            }
+          } else {
+            document.documentElement.scrollLeft += event.deltaX
+            document.documentElement.scrollTop += event.deltaY
+
+            return
+            if (event.deltaY > 0) {
+              zoomDown()
+            } else {
+              zoomUp()
+            }
+          }
+        },
+        {
+          passive: false,
+        }
+      )
+
+      document.ondblclick = () => file.click()
+
+      let prev_scrollPositionX = 0
+      let prev_scrollPositionY = 0
+      window.onpointermove = () => {
+        if (event.buttons) {
+          document.documentElement.scrollLeft += prev_scrollPositionX - event.x
+          document.documentElement.scrollTop += prev_scrollPositionY - event.y
+        }
+        prev_scrollPositionX = event.x
+        prev_scrollPositionY = event.y
+      }
+    </script>
   </body>
 </html>
