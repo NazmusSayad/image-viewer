@@ -41,7 +41,7 @@
 
       .output::after {
         cursor: move;
-        content: "";
+        content: '';
         display: block;
         position: absolute;
         height: 100%;
@@ -68,77 +68,39 @@
     <script>
       const zoomUp = (increment = 1) => {
         output_width += increment
-        output.style.width = output_width + "%"
+        output.style.width = output_width + '%'
       }
       const zoomDown = (increment = 1) => {
         if (output_width < 1) {
           output_width = 1
-          output.style.width = "1%"
+          output.style.width = '1%'
 
           return
         }
 
         output_width -= increment
-        output.style.width = output_width + "%"
+        output.style.width = output_width + '%'
       }
       const zoomReset = () => {
         output_width = 100
-        output.style.width = "100%"
+        output.style.width = '100%'
+      }
+      const pushImage = (src) => {
+        if (!src) return
+        image.src = URL.createObjectURL(src)
       }
 
-      const file = document.querySelector("input")
-      const output = document.querySelector(".output")
-      const image = document.querySelector("img")
+      const file = document.querySelector('input')
+      const output = document.querySelector('.output')
+      const image = document.querySelector('img')
 
       let output_width = 100
 
       // ----------------------------
-      file.onchange = () => {
-        if (!event.target.files[0]) return
-
-        image.src = URL.createObjectURL(event.target.files[0])
-      }
-
-      document.onkeydown = () => {
-        if (event.keyCode === 13) file.click()
-
-        if (event.ctrlKey) {
-          switch (event.key) {
-            case "=":
-              event.preventDefault()
-              zoomUp()
-              break
-
-            case "-":
-              event.preventDefault()
-              zoomDown()
-              break
-
-            case "0":
-              event.preventDefault()
-              zoomReset()
-              break
-
-            case "+":
-              event.preventDefault()
-              zoomUp(10)
-              break
-
-            case "_":
-              event.preventDefault()
-              zoomDown(10)
-              break
-
-            case ")":
-              event.preventDefault()
-              zoomReset()
-              break
-          }
-        }
-      }
-
+      document.ondblclick = () => file.click()
+      file.onchange = (e) => pushImage(e.target.files[0])
       window.addEventListener(
-        "wheel",
+        'wheel',
         () => {
           if (!event.ctrlKey) return
 
@@ -155,8 +117,48 @@
           passive: false,
         }
       )
+      document.onkeydown = () => {
+        if (event.keyCode === 13) file.click()
 
-      document.ondblclick = () => file.click()
+        if (event.ctrlKey) {
+          switch (event.key) {
+            case '=':
+              event.preventDefault()
+              zoomUp()
+              break
+
+            case '-':
+              event.preventDefault()
+              zoomDown()
+              break
+
+            case '0':
+              event.preventDefault()
+              zoomReset()
+              break
+
+            case '+':
+              event.preventDefault()
+              zoomUp(10)
+              break
+
+            case '_':
+              event.preventDefault()
+              zoomDown(10)
+              break
+
+            case ')':
+              event.preventDefault()
+              zoomReset()
+              break
+          }
+        }
+      }
+      document.addEventListener('dragover', (e) => e.preventDefault())
+      document.addEventListener('drop', (e) => {
+        e.preventDefault()
+        pushImage(e.dataTransfer.files[0])
+      })
 
       let prev_scrollPositionX = 0
       let prev_scrollPositionY = 0
